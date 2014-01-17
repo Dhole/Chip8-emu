@@ -16,6 +16,8 @@ Function keys:
 	d: dump memory
 	enter: pause emulation
 	backspace: reset Chip8
+	1: change scale to x8
+	2: change scale to x16
 	esc: exit
 
 Compile with:
