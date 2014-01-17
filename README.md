@@ -4,6 +4,7 @@ Chip8-emu
 Chip8 emulator written in C++ using SDL2
 
 Keys:
+
 	Chip8 buttons:
 	0 to 9 are mapped on the numeric keypad. A - F are mapped to QAZWSX keys
 
