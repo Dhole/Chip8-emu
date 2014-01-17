@@ -40,6 +40,8 @@ const Uint32 KEY_DUMP_RAM = SDLK_d;
 const Uint32 KEY_DUMP_REGS = SDLK_r;
 const Uint32 KEY_PAUSE = SDLK_RETURN;
 const Uint32 KEY_RESET = SDLK_BACKSPACE;
+const Uint32 KEY_SCALE_1 = SDLK_1;
+const Uint32 KEY_SCALE_2 = SDLK_2;
 const Uint32 KEY_EXIT = SDLK_ESCAPE;
 
 Uint32 palette[NCOLORS];
@@ -97,6 +99,13 @@ void stop_SDL()
     Mix_CloseAudio();
     SDL_DestroyWindow(window);
     SDL_Quit();
+}
+
+void change_scale(unsigned int s)
+{
+    scale = s;
+    SDL_SetWindowSize(window, width * scale, height * scale);
+    screen = SDL_GetWindowSurface(window);
 }
 
 void render_SDL(unsigned char gfx[][Chip8::VIDEO_HEIGHT])
@@ -192,6 +201,14 @@ int process_event(SDL_Event *e, Chip8* myChip8)
 		break;
 	    case KEY_PAUSE:
 		pause = pause ^ true;
+		break;
+	    case KEY_SCALE_1:
+		if (scale != 8)
+		    change_scale(8);
+		break;
+	    case KEY_SCALE_2:
+		if (scale != 16)
+		    change_scale(16);
 		break;
 	    case KEY_EXIT:
 		return 1;
