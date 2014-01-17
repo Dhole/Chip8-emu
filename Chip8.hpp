@@ -32,6 +32,7 @@ private:
     unsigned short stack[STACK_SIZE];
     unsigned char sp;
 
+    // charset needed for opcode FX29
     unsigned char chip8_fontset[80] =
     { 
 	0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -62,13 +63,15 @@ public:
 
     void clear_screen();
     
-    /* Initializes all the registers and memory to 0
-       Sets pc to 0x200 where the program will be loaded */
+    /* Sets rand_state and rom_path, calls reset() and load_rom()
+       to initialize the machine. Returns 0 upon succes or 1 otherwise */
     int initialize(unsigned char start_time, std::string rom_path);
 
+    /* Initializes all the registers and memory to 0
+       Sets pc to 0x200 where the program will be loaded */
     void reset();
 
-    /* Loads game given by path at position 0x200 of memory
+    /* Loads the rom from rom_path at position 0x200 of memory
        Returns 0 upon succes or 1 otherwise */
     int load_rom();
 
