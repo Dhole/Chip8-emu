@@ -59,6 +59,7 @@ const Uint32 KEY_D = SDLK_r;
 const Uint32 KEY_E = SDLK_f;
 const Uint32 KEY_F = SDLK_v;
 // end SDL2
+
 // Function keys
 const Uint32 KEY_DUMP_RAM = SDLK_o;
 const Uint32 KEY_DUMP_REGS = SDLK_p;
@@ -224,6 +225,7 @@ void update_key_reg(unsigned char key[])
 #else
     const Uint8 *keystates = SDL_GetKeyState(NULL);
 #endif
+
     // end SDL1.2
     key[0x0] = keystates[KEY_0];
     key[0x1] = keystates[KEY_1];
