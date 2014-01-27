@@ -5,6 +5,8 @@
 
 #ifdef EMSCRIPTEN
 #include <emscripten.h>
+#include <string>
+#include <sstream>
 #endif
 
 #include "Chip8.hpp"
@@ -338,21 +340,37 @@ void main_loop()
     }
     render_SDL(myChip8.gfx);
 }
-#ifdef EMSCRIPTEN
-void print_games()
-{
-    std::cout << "INVADERS" << std::endl;
-}
-#endif
+
 int main(int argc, char** argv)
 {
     std::string rom_path;
 #ifdef EMSCRIPTEN
-    //std::cout << "Select game: ";
-    //std::cin >> rom_path;
-    //if (rom_path == "")
-//	return 1;
-    rom_path = "INVADERS";
+    char rom_path_ch[50];
+
+    EM_ASM_INT({
+	    var games =
+'15PUZZLE BLITZ CONNECT4 HIDDEN KALEID MERLIN\n\
+PONG PUZZLE SYZYGY TETRIS UFO VERS\n\
+BLINKY BRIX GUESS INVADERS MAZE MISSILE\n\
+PONG2 SCTEST TANK TICTAC VBRIX WIPEOFF';
+
+	    var rom = prompt('Write the name of the ROM\n\nAvailable roms are:\n' + games);
+	    for (i = 0; i < rom.length; i++)
+		setValue($0 + i, rom.charCodeAt(i), 'i8');
+	    
+	    return 0;
+	}, rom_path_ch);
+
+    rom_path = rom_path_ch;
+    std::stringstream ss;
+    ss << "c8games/" << rom_path;
+    rom_path = ss.str();
+    
+    if (rom_path == "")
+    {
+	std::cout << "No ROM selected\n";
+	return 1;
+    }
 #else
     if (argc < 2)
     {

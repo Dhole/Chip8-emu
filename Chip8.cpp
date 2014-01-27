@@ -62,7 +62,9 @@ void Chip8::reset()
 int Chip8::load_rom()
 {
     std::streampos size;
-  
+
+    std::cout << "Loading rom: " << rom_path << std::endl;
+    
     std::ifstream file(rom_path, std::ios::in|std::ios::binary|std::ios::ate);
     if (file.is_open())
     {
